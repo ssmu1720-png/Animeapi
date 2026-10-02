@@ -1,0 +1,238 @@
+import { EndpointDef } from '../types.ts';
+
+export const ENDPOINTS_DATA: EndpointDef[] = [
+  {
+    key: 'search',
+    name: 'Search Anime',
+    method: 'GET',
+    path: '/api/search',
+    description: 'Query anime by title, romanized name, alternate translations, or franchise keyword.',
+    params: [
+      {
+        name: 'keyword',
+        label: 'Search Keyword',
+        type: 'text',
+        default: 'naruto',
+        placeholder: 'e.g. naruto, jujutsu, one piece, bleach',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'Naruto', params: { keyword: 'naruto' } },
+      { label: 'Jujutsu Kaisen', params: { keyword: 'jujutsu' } },
+      { label: 'One Piece', params: { keyword: 'one piece' } },
+      { label: 'Solo Leveling', params: { keyword: 'solo leveling' } },
+    ],
+  },
+  {
+    key: 'detail',
+    name: 'Anime Details',
+    method: 'GET',
+    path: '/api/detail',
+    description: 'Fetch complete metadata including synopsis, genres, studios, scores, and related seasons.',
+    params: [
+      {
+        name: 'id',
+        label: 'Anime ID or Slug',
+        type: 'text',
+        default: '40',
+        placeholder: 'e.g. 40, naruto-40, 51009',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'Naruto (ID 40)', params: { id: '40' } },
+      { label: 'Jujutsu Kaisen S2 (51009)', params: { id: '51009' } },
+      { label: 'One Piece (100)', params: { id: '100' } },
+      { label: 'Solo Leveling (52299)', params: { id: '52299' } },
+    ],
+  },
+  {
+    key: 'episodes',
+    name: 'Episode List',
+    method: 'GET',
+    path: '/api/episodes',
+    description: 'Retrieve all episode numbers, air dates, duration, recap and filler flags, plus sub/dub availability.',
+    params: [
+      {
+        name: 'id',
+        label: 'Anime ID',
+        type: 'text',
+        default: '40',
+        placeholder: 'e.g. 40, 51009, 100',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'Naruto (40)', params: { id: '40' } },
+      { label: 'Jujutsu Kaisen S2 (51009)', params: { id: '51009' } },
+    ],
+  },
+  {
+    key: 'servers',
+    name: 'Stream Servers',
+    method: 'GET',
+    path: '/api/servers',
+    description: 'Fetch stream host servers grouped by Sub and Dub for a specific episode number.',
+    params: [
+      {
+        name: 'id',
+        label: 'Anime ID',
+        type: 'text',
+        default: '40',
+        placeholder: 'e.g. 40',
+        required: true,
+      },
+      {
+        name: 'ep',
+        label: 'Episode Number',
+        type: 'number',
+        default: 1,
+        placeholder: '1',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'Naruto Ep 1', params: { id: '40', ep: 1 } },
+      { label: 'Naruto Ep 5', params: { id: '40', ep: 5 } },
+      { label: 'JJK S2 Ep 1', params: { id: '51009', ep: 1 } },
+    ],
+  },
+  {
+    key: 'sources',
+    name: 'Video Sources',
+    method: 'GET',
+    path: '/api/sources',
+    description: 'Extract embed stream URL, player host, and automated intro/outro skip intervals.',
+    params: [
+      {
+        name: 'linkId',
+        label: 'Link ID',
+        type: 'text',
+        default: 'link-vidstream-sub-41',
+        placeholder: 'e.g. link-vidstream-sub-41',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'Vidstream Sub', params: { linkId: 'link-vidstream-sub-41' } },
+      { label: 'MegaCloud Dub', params: { linkId: 'link-megacloud-dub-28' } },
+      { label: 'Streamtape Sub', params: { linkId: 'link-streamtape-sub-35' } },
+    ],
+  },
+  {
+    key: 'pipeline',
+    name: 'Full Pipeline',
+    method: 'GET',
+    path: '/api/pipeline',
+    description: 'All-in-one endpoint: searches anime, retrieves details, gets episode list, picks server, and fetches stream source.',
+    params: [
+      {
+        name: 'keyword',
+        label: 'Anime Keyword',
+        type: 'text',
+        default: 'naruto',
+        placeholder: 'e.g. naruto, bleach, one piece',
+        required: true,
+      },
+      {
+        name: 'ep',
+        label: 'Target Episode',
+        type: 'number',
+        default: 1,
+        placeholder: '1',
+        required: false,
+      },
+    ],
+    samplePresets: [
+      { label: 'Naruto Ep 1 Pipeline', params: { keyword: 'naruto', ep: 1 } },
+      { label: 'Jujutsu Kaisen Ep 1', params: { keyword: 'jujutsu', ep: 1 } },
+      { label: 'Bleach TYBW Ep 1', params: { keyword: 'bleach', ep: 1 } },
+    ],
+  },
+  {
+    key: 'schedule',
+    name: 'Airing Schedule',
+    method: 'GET',
+    path: '/api/schedule',
+    description: 'Weekly timetable of broadcasting anime with release times and dates.',
+    params: [
+      {
+        name: 'date',
+        label: 'Date (optional)',
+        type: 'text',
+        default: '',
+        placeholder: 'YYYY-MM-DD (e.g. 2026-10-02)',
+        required: false,
+      },
+    ],
+    samplePresets: [
+      { label: 'Current Schedule', params: { date: '' } },
+      { label: 'Today Airing', params: { date: '2026-10-02' } },
+    ],
+  },
+  {
+    key: 'trending',
+    name: 'Trending Anime',
+    method: 'GET',
+    path: '/api/trending',
+    description: 'Top trending and hot anime series with current ratings and episode counters.',
+    params: [],
+    samplePresets: [
+      { label: 'Load Trending List', params: {} },
+    ],
+  },
+  {
+    key: 'recommendations',
+    name: 'Recommendations',
+    method: 'GET',
+    path: '/api/recommendations',
+    description: 'Get tailored recommendations based on an anime reference ID.',
+    params: [
+      {
+        name: 'id',
+        label: 'Anime ID',
+        type: 'text',
+        default: '40',
+        placeholder: 'e.g. 40',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'For Naruto (40)', params: { id: '40' } },
+      { label: 'For JJK (51009)', params: { id: '51009' } },
+    ],
+  },
+  {
+    key: 'tooltip',
+    name: 'Card Tooltip',
+    method: 'GET',
+    path: '/api/tooltip',
+    description: 'Hovercard quick preview containing rating, scores, genres snippet, and synopsis.',
+    params: [
+      {
+        name: 'id',
+        label: 'Anime ID',
+        type: 'text',
+        default: '40',
+        placeholder: '40',
+        required: true,
+      },
+    ],
+    samplePresets: [
+      { label: 'Naruto Preview (40)', params: { id: '40' } },
+      { label: 'JJK Preview (51009)', params: { id: '51009' } },
+    ],
+  },
+  {
+    key: 'health',
+    name: 'API Health Check',
+    method: 'GET',
+    path: '/api/health',
+    description: 'System uptime, upstream connectivity to aniwaves.ru, latency diagnostic, and endpoint manifest.',
+    params: [],
+    samplePresets: [
+      { label: 'Check System Status', params: {} },
+    ],
+  },
+];

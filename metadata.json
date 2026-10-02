@@ -1,0 +1,6 @@
+{
+  "name": "animelyrical API & Explorer",
+  "description": "High-performance anime data scraper API and real-time interactive testing console by lyrical, featuring endpoint diagnostics, response visualizers, and Vercel-ready architecture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
